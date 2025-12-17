@@ -7,10 +7,10 @@ import {
   Button,
 } from '@toss/tds-mobile';
 import { adaptive } from '@toss/tds-colors';
-import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../hooks/domain/auth/useLogin';
 
 export default function Page() {
-  const navigate = useNavigate();
+  const { handleLogin, isLoading } = useLogin();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       <Post.H2 paddingBottom={24} color={adaptive.grey800} aria-label="앱 설명">
@@ -71,12 +71,14 @@ export default function Page() {
               />
             </div>
           }
-          hideLine={false}
+          hideLine={true}
         />
         </Stepper>
       </div>
       
-      <Button display="block" onClick={() => navigate('/login')}>다음</Button>
+      <Button display="block" onClick={handleLogin} disabled={isLoading}>
+        {isLoading ? '로그인하고 있어요' : '시작하기'}
+      </Button>
     </div>
   );
 }
